@@ -1,0 +1,106 @@
+{
+    "@type": "Workflow",
+    "triggerLimit": null,
+    "name": "Create new Task Record",
+    "aliasName": null,
+    "tag": null,
+    "description": null,
+    "isActive": true,
+    "debug": false,
+    "singleRecordExecution": false,
+    "remoteExecutableFlag": false,
+    "parameters": [],
+    "synchronous": false,
+    "collection": "\/api\/3\/workflow_collections\/2f6fbe49-e056-43b9-9abf-7fd5bd320aed",
+    "versions": [],
+    "triggerStep": "\/api\/3\/workflow_steps\/c3e19dc5-8e46-4a4d-97f3-42a8d4f0ebc6",
+    "steps": [
+        {
+            "@type": "WorkflowStep",
+            "name": "Create new network request",
+            "description": null,
+            "arguments": {
+                "name": "ServiceNow",
+                "config": "4212a59c-97cf-440b-b472-23cd84ec8e84",
+                "params": {
+                    "data": "{\n    \"u_email\": \"john.doe@example.com\",\n    \"u_phone\": \"555-1234\",\n    \"u_company\": \"Example Corp\",\n    \"u_device_mac\": \"AA:BB:CC:DD:EE:FF\",\n    \"u_access_zone\": \"employee\",\n    \"u_justification\": \"Need access for project work\",\n    \"u_site_location\": \"office-building-1\",\n    \"u_start_datetime\": \"2025-11-15 08:00:00\",\n    \"u_end_datetime\": \"2025-11-15 17:00:00\",\n    \"u_access_duration\": \"9\",\n    \"u_contractor_name\": \"John Doe\",\n    \"u_services_required\": \"HTTPS, SSH, RDP\",\n    \"short_description\": \"Network access request for project\",\n    \"description\": \"Requesting network access for project Alpha\",\n    \"priority\": \"3\",\n    \"urgency\": \"3\",\n    \"impact\": \"3\"\n  }",
+                    "method": "POST",
+                    "endpoint": "api\/now\/table\/x_955905_test_x_fortinet_network_access",
+                    "query_params": ""
+                },
+                "version": "3.4.0",
+                "connector": "servicenow",
+                "operation": "generic_api_call",
+                "operationTitle": "Generic API Call",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "245",
+            "left": "269",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "e4f7be38-faf1-48d7-97eb-6e6e96e244ba"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Start",
+            "description": null,
+            "arguments": {
+                "__triggerLimit": true,
+                "step_variables": {
+                    "input": {
+                        "params": []
+                    }
+                },
+                "triggerOnSource": true,
+                "triggerOnReplicate": false
+            },
+            "status": null,
+            "top": "40",
+            "left": "40",
+            "stepType": "\/api\/3\/workflow_step_types\/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+            "group": null,
+            "uuid": "c3e19dc5-8e46-4a4d-97f3-42a8d4f0ebc6"
+        }
+    ],
+    "routes": [
+        {
+            "@type": "WorkflowRoute",
+            "name": "Start -> delete comments",
+            "targetStep": "\/api\/3\/workflow_steps\/e4f7be38-faf1-48d7-97eb-6e6e96e244ba",
+            "sourceStep": "\/api\/3\/workflow_steps\/c3e19dc5-8e46-4a4d-97f3-42a8d4f0ebc6",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "5b93b747-8686-4df5-935c-5f04025470cd"
+        }
+    ],
+    "groups": [
+        {
+            "@type": "WorkflowGroup",
+            "name": "Tip",
+            "description": "Use this playbook to create a new Network Request record in Servicenow",
+            "type": "note",
+            "isCollapsed": false,
+            "hasTriggerStep": false,
+            "hideInLogs": false,
+            "metadata": [],
+            "reusable": false,
+            "top": "40",
+            "left": "580",
+            "height": "123",
+            "width": "338",
+            "uuid": "740c113c-dca4-49e5-a1e4-6d5e14b59cc8",
+            "recordTags": []
+        }
+    ],
+    "priority": "\/api\/3\/picklists\/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+    "playbookOrigin": "\/api\/3\/picklists\/b6d710a9-a8ec-41ec-8817-fe9fa062fcdd",
+    "isEditable": false,
+    "uuid": "fe1f138a-d7a0-4183-a793-a1f89d337503",
+    "owners": [],
+    "isPrivate": false,
+    "deletedAt": null,
+    "recordTags": []
+}

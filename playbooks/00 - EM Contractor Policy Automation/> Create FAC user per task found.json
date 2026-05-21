@@ -1,0 +1,436 @@
+{
+    "@type": "Workflow",
+    "triggerLimit": null,
+    "name": "> Create FAC user per task found",
+    "aliasName": null,
+    "tag": null,
+    "description": null,
+    "isActive": true,
+    "debug": false,
+    "singleRecordExecution": false,
+    "remoteExecutableFlag": false,
+    "parameters": [
+        "snow_task_record",
+        "fac_resource_group_uri",
+        "existing_group_users"
+    ],
+    "synchronous": false,
+    "collection": "\/api\/3\/workflow_collections\/2f6fbe49-e056-43b9-9abf-7fd5bd320aed",
+    "versions": [],
+    "triggerStep": "\/api\/3\/workflow_steps\/16134a69-dd3f-446e-84c0-d87f8e9f7524",
+    "steps": [
+        {
+            "@type": "WorkflowStep",
+            "name": "Add creation notice and mark task as complete",
+            "description": null,
+            "arguments": {
+                "name": "ServiceNow",
+                "config": "4212a59c-97cf-440b-b472-23cd84ec8e84",
+                "params": {
+                    "sys_id": "{{vars.input.params['snow_task_record']['sys_id']}}",
+                    "payload": "{\"state\":3, \"work_notes\": \"{{vars.user_created_html_notes}}\" }",
+                    "table_name": "x_955905_test_x_fortinet_network_access",
+                    "description": ""
+                },
+                "version": "3.4.0",
+                "connector": "servicenow",
+                "operation": "update_servicenow_ticket",
+                "operationTitle": "Update ServiceNow Table Record",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "580",
+            "left": "740",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "b8d3dc36-27c1-48f9-b611-38e725440e4d"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Add user to group",
+            "description": null,
+            "arguments": {
+                "name": "Fortinet FortiAuthenticator",
+                "config": "4fc05dbf-6bae-48b9-87d1-0a828fd86873",
+                "params": {
+                    "data": "{{vars.all_users_payload}}",
+                    "method": "PATCH",
+                    "params": "",
+                    "headers": "",
+                    "endpoint": "{{vars.input.params['fac_resource_group_uri']}}"
+                },
+                "version": "1.0.0",
+                "connector": "fortinet-fortiauthenticator",
+                "operation": "make_generic_request",
+                "operationTitle": "Make Generic Request",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "460",
+            "left": "740",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "cdd3f0ff-4331-4e9d-a1cf-2d76fc970e33"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Build html for snow work notes update",
+            "description": null,
+            "arguments": {
+                "user_created_html_notes": "[code]\n<div style='margin: 10px 0;'>\n   <h3 style='margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #00d4ff; font-size: 1.3em; letter-spacing: 0.5px;'>\u2713 User Creation Successful<\/h3>\n   \n   <div style='display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px;'>\n      <div style='padding: 14px; border: 1px solid #444; border-left: 3px solid #00d4ff; border-radius: 6px; box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1);'>\n         <div style='font-size: 0.75em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 6px;'>User ID<\/div>\n         <div style='font-size: 1.1em; font-weight: 600;'>{{ vars.steps.Create_Task.id }}<\/div>\n      <\/div>\n      \n      <div style='padding: 14px; border: 1px solid #444; border-left: 3px solid #00d4ff; border-radius: 6px; box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1);'>\n         <div style='font-size: 0.75em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 6px;'>Username<\/div>\n         <div style='font-size: 1.1em; font-weight: 600;'>{{ vars.steps.Check_if_user_exists.data.objects[0].username }}<\/div>\n      <\/div>\n      \n      <div style='padding: 14px; border: 1px solid #444; border-left: 3px solid #00d4ff; border-radius: 6px; box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1);'>\n         <div style='font-size: 0.75em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 6px;'>Full Name<\/div>\n         <div style='font-size: 1.1em; font-weight: 600;'>{{ vars.steps.Check_if_user_exists.data.objects[0].first_name }} {{ vars.steps.Check_if_user_exists.data.objects[0].last_name }}<\/div>\n      <\/div>\n      \n      <div style='padding: 14px; border: 1px solid #444; border-left: 3px solid #00d4ff; border-radius: 6px; box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1);'>\n         <div style='font-size: 0.75em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 6px;'>Email<\/div>\n         <div style='font-size: 1.1em; font-weight: 600;'>{{ vars.steps.Check_if_user_exists.data.objects[0].email }}<\/div>\n      <\/div>\n      \n      <div style='padding: 14px; border: 1px solid #444; border-left: 3px solid #00d4ff; border-radius: 6px; box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1);'>\n         <div style='font-size: 0.75em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 6px;'>Company<\/div>\n         <div style='font-size: 1.1em; font-weight: 600;'>{{ vars.steps.Check_if_user_exists.data.objects[0].company }}<\/div>\n      <\/div>\n      \n      <div style='padding: 14px; border: 1px solid #444; border-left: 3px solid #4CAF50; border-radius: 6px; box-shadow: 0 2px 8px rgba(76, 175, 80, 0.15);'>\n         <div style='font-size: 0.75em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 6px;'>Status<\/div>\n         <div style='font-size: 1.1em; font-weight: 600;'>{% if vars.steps.Check_if_user_exists.data.objects[0].active %}<span style='color: #4CAF50;'>\u25cf Active<\/span>{% else %}<span style='color: #f44336;'>\u25cf Inactive<\/span>{% endif %}<\/div>\n      <\/div>\n      \n      <div style='padding: 14px; border: 1px solid #444; border-left: 3px solid #00d4ff; border-radius: 6px; box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1);'>\n         <div style='font-size: 0.75em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 6px;'>Expires At<\/div>\n         <div style='font-size: 1.1em; font-weight: 600;'>{{ vars.steps.Check_if_user_exists.data.objects[0].expires_at }}<\/div>\n      <\/div>\n      \n      <div style='padding: 14px; border: 1px solid #444; border-left: 3px solid #00d4ff; border-radius: 6px; box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1); grid-column: span 2;'>\n         <div style='font-size: 0.75em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 6px;'>User Groups<\/div>\n         <div style='font-size: 1.1em; font-weight: 600;'>{% for group in vars.steps.Check_if_user_exists.data.objects[0].user_groups %}<span style='display: inline-block; padding: 4px 12px; margin-right: 8px; margin-top: 4px; border: 1px solid #555; border-radius: 20px; font-size: 0.9em;'>{{ group }}<\/span>{% endfor %}<\/div>\n      <\/div>\n   <\/div>\n   \n   <div style='padding: 16px; border: 1px solid #444; border-left: 4px solid #00d4ff; margin-top: 20px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1);'>\n      <p style='margin: 6px 0;'><span style='opacity: 0.7; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px;'>Operation Status:<\/span> <strong style='color: #4CAF50; margin-left: 8px;'>{{ vars.steps.Check_if_user_exists.status }}<\/strong><\/p>\n      <p style='margin: 6px 0;'><span style='opacity: 0.7; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px;'>Execution Time:<\/span> <strong style='margin-left: 8px;'>{{ vars.steps.Check_if_user_exists.execution_time }}<\/strong><\/p>\n      <p style='margin: 10px 0 0 0; padding-top: 10px; border-top: 1px solid #333; opacity: 0.6; font-size: 0.85em;'><em>\u23f1 User created on {{arrow.get(\"2020-01-13 06:51:55\").to(\"UTC\").format(\"YYYY-MM-DD HH:mm:ss ZZ\")}}<\/em><\/p>\n   <\/div>\n<\/div>\n[\/code]"
+            },
+            "status": null,
+            "top": "520",
+            "left": "420",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "41ab0991-31bd-485c-8e73-d96d8c62418b"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Build User query",
+            "description": null,
+            "arguments": {
+                "user_payload": "{% set rec = vars.input.params['snow_task_record'] %}\n{# --- Derivations --- #}\n{% set name = (rec.u_contractor_name or '').strip() %}\n{% set parts = name.split() %}\n{% set first = (parts[0] if parts|length > 0 else '') %}\n{% set last  = (parts[-1] if parts|length > 1 else '') %}\n{% set username = (first ~ ('.' ~ last if last else ''))|lower %}\n\n{# Prefer provided email; else derive from company #}\n{% set company = (rec.u_company or '').strip() %}\n{% set email_domain = (company|lower ~ '.net') if company else '' %}\n{% set derived_email = (username ~ '@' ~ email_domain) if email_domain else '' %}\n{% set email = (rec.u_email or derived_email) %}\n\n{# Expires: convert \"YYYY-MM-DD HH:MM:SS\" -> ISO8601 \"YYYY-MM-DDTHH:MM:SSZ\" #}\n{% set end = rec.u_end_datetime or '' %}\n{% set expires_at = (end.replace(' ', 'T') ~ 'Z') if end else '' %}\n\n{# Mobile: only include if it already matches \"+<country>-<number>\" or \"+<digits>\" #}\n{% set mobile = rec.u_phone or '' %}\n{% set mobile_ok = mobile.startswith('+') %}\n\n{# --- Build payload dict with supported fields only --- #}\n{% set payload = {\n  \"username\": username,                  \n  \"email\": email if email else None,\n  \"first_name\": first if first else None,\n  \"last_name\": last if last else None,\n  \"company\": company if company else None,\n  \"expires_at\": expires_at if expires_at else None,\n  \"active\": True,                       \n  \"mobile_number\": mobile if mobile_ok else None\n} %}\n\n{# Optional 2FA block (set these vars externally if you want 2FA) #}\n{# Example: set enable_token_auth=true, token_type='email'\/'sms'\/'ftk'\/'ftm'\/'dual',\n   ftm_act_method='email'\/'sms', token_serial='FTKxxxx' #}\n{% if enable_token_auth %}\n  {% set _ = payload.update({\"token_auth\": True}) %}\n  {% if token_type %}{% set _ = payload.update({\"token_type\": token_type}) %}{% endif %}\n  {% if ftm_act_method %}{% set _ = payload.update({\"ftm_act_method\": ftm_act_method}) %}{% endif %}\n  {% if token_serial %}{% set _ = payload.update({\"token_serial\": token_serial}) %}{% endif %}\n{% endif %}\n\n{# Remove None\/empty-string values #}\n{% set cleaned = {} %}\n{% for k, v in payload.items() %}\n  {% if v is not none and (v is boolean or (v is iterable and v|length > 0)) %}\n    {% set _ = cleaned.update({k: v}) %}\n  {% endif %}\n{% endfor %}\n\n{{ cleaned | tojson }}"
+            },
+            "status": null,
+            "top": "40",
+            "left": "340",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "78901d87-8b92-4ec6-a8f6-a57b93be5a6b"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Check if user exists",
+            "description": null,
+            "arguments": {
+                "name": "Fortinet FortiAuthenticator",
+                "config": "4fc05dbf-6bae-48b9-87d1-0a828fd86873",
+                "params": {
+                    "data": "",
+                    "method": "GET",
+                    "params": "",
+                    "headers": "",
+                    "endpoint": "api\/v1\/localusers\/?username__exact={{vars.user_payload.username}}"
+                },
+                "version": "1.0.0",
+                "connector": "fortinet-fortiauthenticator",
+                "operation": "make_generic_request",
+                "operationTitle": "Make Generic Request",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "40",
+            "left": "640",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "26052676-1cc1-4357-853e-d376ac0134ad"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Check if user found",
+            "description": null,
+            "arguments": {
+                "conditions": [
+                    {
+                        "option": "Found user",
+                        "step_iri": "\/api\/3\/workflow_steps\/06cf07ad-e897-4ac5-af3e-277de3a951bd",
+                        "condition": "{{ vars.steps.Check_if_user_exists.data.objects | length > 0 }}",
+                        "step_name": "Set found user"
+                    },
+                    {
+                        "option": "Could not find user",
+                        "default": true,
+                        "step_iri": "\/api\/3\/workflow_steps\/ab136645-6ad7-460d-b14b-6e1200594f67",
+                        "step_name": "Create User"
+                    }
+                ],
+                "step_variables": []
+            },
+            "status": null,
+            "top": "180",
+            "left": "640",
+            "stepType": "\/api\/3\/workflow_step_types\/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+            "group": null,
+            "uuid": "111a5757-9b29-4895-9341-a568042562a1"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Copy of Build html for snow work notes update",
+            "description": null,
+            "arguments": {
+                "user_created_html_notes": "[code]\n<div style='font-family: Arial, sans-serif; padding: 10px; background-color: #f5f5f5; border-left: 4px solid #4CAF50; margin: 10px 0;'>\n   <h3 style='color: #2c3e50; margin-top: 0;'>User Creation Successful<\/h3>\n   <table style='width: 100%; border-collapse: collapse; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>\n      <tr style='background-color: #e8f4f8;'>\n         <td style='padding: 8px; border: 1px solid #ddd; font-weight: bold;'>Field<\/td>\n         <td style='padding: 8px; border: 1px solid #ddd; font-weight: bold;'>Value<\/td>\n      <\/tr>\n      <tr>\n         <td style='padding: 8px; border: 1px solid #ddd;'><strong>User ID<\/strong><\/td>\n         <td style='padding: 8px; border: 1px solid #ddd;'>{{ vars.steps.Create_Task.id }}<\/td>\n      <\/tr>\n      <tr style='background-color: #f9f9f9;'>\n         <td style='padding: 8px; border: 1px solid #ddd;'><strong>Username<\/strong><\/td>\n         <td style='padding: 8px; border: 1px solid #ddd;'>{{ vars.steps.Check_if_user_exists.data.objects[0].username }}<\/td>\n      <\/tr>\n      <tr>\n         <td style='padding: 8px; border: 1px solid #ddd;'><strong>Full Name<\/strong><\/td>\n         <td style='padding: 8px; border: 1px solid #ddd;'>{{ vars.steps.Check_if_user_exists.data.objects[0].first_name }} {{ vars.steps.Check_if_user_exists.data.objects[0].last_name }}<\/td>\n      <\/tr>\n      <tr style='background-color: #f9f9f9;'>\n         <td style='padding: 8px; border: 1px solid #ddd;'><strong>Email<\/strong><\/td>\n         <td style='padding: 8px; border: 1px solid #ddd;'>{{ vars.steps.Check_if_user_exists.data.objects[0].email }}<\/td>\n      <\/tr>\n      <tr>\n         <td style='padding: 8px; border: 1px solid #ddd;'><strong>Company<\/strong><\/td>\n         <td style='padding: 8px; border: 1px solid #ddd;'>{{ vars.steps.Check_if_user_exists.data.objects[0].company }}<\/td>\n      <\/tr>\n      <tr style='background-color: #f9f9f9;'>\n         <td style='padding: 8px; border: 1px solid #ddd;'><strong>Status<\/strong><\/td>\n         <td style='padding: 8px; border: 1px solid #ddd;'>{% if vars.steps.Check_if_user_exists.data.objects[0].active %}<span style='color: green; font-weight: bold;'>Active<\/span>{% else %}<span style='color: red; font-weight: bold;'>Inactive<\/span>{% endif %}<\/td>\n      <\/tr>\n      <tr>\n         <td style='padding: 8px; border: 1px solid #ddd;'><strong>Expires At<\/strong><\/td>\n         <td style='padding: 8px; border: 1px solid #ddd;'>{{ vars.steps.Check_if_user_exists.data.objects[0].expires_at }}<\/td>\n      <\/tr>\n      <tr style='background-color: #f9f9f9;'>\n         <td style='padding: 8px; border: 1px solid #ddd;'><strong>User Groups<\/strong><\/td>\n         <td style='padding: 8px; border: 1px solid #ddd;'>{% for group in vars.steps.Check_if_user_exists.data.objects[0].user_groups %}{{ group }}{% if not loop.last %}, {% endif %}{% endfor %}<\/td>\n      <\/tr>\n   <\/table>\n   <div style='margin-top: 10px; padding: 10px; background-color: #e8f5e9; border-radius: 4px;'>\n      <p style='margin: 5px 0;'><strong>Operation Status:<\/strong> <span style='color: #4CAF50;'>{{ vars.steps.Check_if_user_exists.status }}<\/span><\/p>\n      <p style='margin: 5px 0;'><strong>Execution Time:<\/strong> {{ vars.steps.Check_if_user_exists.execution_time }}<\/p>\n      <p style='margin: 5px 0; font-size: 12px; color: #666;'><em>User created on {{arrow.get(\"2020-01-13 06:51:55\").to(\"UTC\").format(\"YYYY-MM-DD HH:mm:ss ZZ\")}}<\/em><\/p>\n   <\/div>\n<\/div>\n[\/code]"
+            },
+            "status": null,
+            "top": "640",
+            "left": "180",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "9018dee9-ebc0-4dcf-b1ba-983d76c174e0"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Create Task",
+            "description": null,
+            "arguments": {
+                "resource": {
+                    "name": "{{vars.input.params['snow_task_record'].number}} for {{vars.input.params['snow_task_record']['u_contractor_name']}}",
+                    "__replace": ""
+                },
+                "operation": "Overwrite",
+                "collection": "\/api\/3\/tasks",
+                "__recommend": [],
+                "fieldOperation": {
+                    "recordTags": "Overwrite"
+                },
+                "step_variables": []
+            },
+            "status": null,
+            "top": "160",
+            "left": "40",
+            "stepType": "\/api\/3\/workflow_step_types\/2597053c-e718-44b4-8394-4d40fe26d357",
+            "group": null,
+            "uuid": "3d2030ca-a1c4-4eb4-a01f-778b864a1984"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Create User",
+            "description": null,
+            "arguments": {
+                "name": "Fortinet FortiAuthenticator",
+                "config": "4fc05dbf-6bae-48b9-87d1-0a828fd86873",
+                "params": {
+                    "data": "{{vars.user_payload}}",
+                    "method": "POST",
+                    "params": "",
+                    "headers": "",
+                    "endpoint": "api\/v1\/localusers\/"
+                },
+                "version": "1.0.0",
+                "connector": "fortinet-fortiauthenticator",
+                "operation": "make_generic_request",
+                "ignore_errors": true,
+                "operationTitle": "Make Generic Request",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "300",
+            "left": "360",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "ab136645-6ad7-460d-b14b-6e1200594f67"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Set found user",
+            "description": null,
+            "arguments": {
+                "user_uri": "{% if vars.steps.Check_if_user_exists.data.objects | length > 0 %}\n[\"{{vars.steps.Check_if_user_exists.data.objects[0].resource_uri}}\"]\n{% else %}\n[\"{{vars.steps.Create_User.data['resource_uri']}}\"]\n{% endif %}"
+            },
+            "status": null,
+            "top": "320",
+            "left": "820",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "06cf07ad-e897-4ac5-af3e-277de3a951bd"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Set total users for group",
+            "description": null,
+            "arguments": {
+                "all_users_payload": "{% set users = vars.input.params['existing_group_users'] + vars.user_uri%}\n{\"users\": {{ users }}\n}"
+            },
+            "status": null,
+            "top": "400",
+            "left": "420",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "0563b5c5-ccc7-4714-8d74-eeca483fa058"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Start",
+            "description": null,
+            "arguments": {
+                "__triggerLimit": true,
+                "step_variables": {
+                    "input": {
+                        "params": []
+                    }
+                },
+                "triggerOnSource": true,
+                "triggerOnReplicate": false
+            },
+            "status": null,
+            "top": "40",
+            "left": "40",
+            "stepType": "\/api\/3\/workflow_step_types\/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+            "group": null,
+            "uuid": "16134a69-dd3f-446e-84c0-d87f8e9f7524"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Update SNOW Task",
+            "description": null,
+            "arguments": {
+                "name": "ServiceNow",
+                "config": "4212a59c-97cf-440b-b472-23cd84ec8e84",
+                "params": {
+                    "sys_id": "{{vars.input.params['snow_task_record']['sys_id']}}",
+                    "payload": "{\"u_fortisoar_ticket_id\": \"{{vars.steps.Create_Task.id}}\", \"work_notes\": \"Create SOAR ticket for {{vars.steps.Create_Task.id}}\", \"state\": \"In Progress\" }",
+                    "table_name": "x_955905_test_x_fortinet_network_access",
+                    "description": ""
+                },
+                "version": "3.4.0",
+                "connector": "servicenow",
+                "operation": "update_servicenow_ticket",
+                "operationTitle": "Update ServiceNow Table Record",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "160",
+            "left": "340",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "7b74909a-6556-4abe-9a39-876622b5d35c"
+        }
+    ],
+    "routes": [
+        {
+            "@type": "WorkflowRoute",
+            "name": "Add user to group -> Build html for snow work notes update",
+            "targetStep": "\/api\/3\/workflow_steps\/41ab0991-31bd-485c-8e73-d96d8c62418b",
+            "sourceStep": "\/api\/3\/workflow_steps\/cdd3f0ff-4331-4e9d-a1cf-2d76fc970e33",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "172a0203-bebd-4818-92a7-7f173df7401e"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Build html for snow work notes update -> Add creation notice and mark task as complete",
+            "targetStep": "\/api\/3\/workflow_steps\/b8d3dc36-27c1-48f9-b611-38e725440e4d",
+            "sourceStep": "\/api\/3\/workflow_steps\/41ab0991-31bd-485c-8e73-d96d8c62418b",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "7beb0841-bfe9-4406-9ab2-6f0029ca741c"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Build User query -> Check if user exists",
+            "targetStep": "\/api\/3\/workflow_steps\/26052676-1cc1-4357-853e-d376ac0134ad",
+            "sourceStep": "\/api\/3\/workflow_steps\/78901d87-8b92-4ec6-a8f6-a57b93be5a6b",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "8ba8c168-ed3a-4528-bd87-1fc8ea2a3317"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Check if user exists -> Check if user found",
+            "targetStep": "\/api\/3\/workflow_steps\/111a5757-9b29-4895-9341-a568042562a1",
+            "sourceStep": "\/api\/3\/workflow_steps\/26052676-1cc1-4357-853e-d376ac0134ad",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "7681680f-7d1d-4a61-9cb8-8f15b98127f4"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Check if user found -> Create User",
+            "targetStep": "\/api\/3\/workflow_steps\/ab136645-6ad7-460d-b14b-6e1200594f67",
+            "sourceStep": "\/api\/3\/workflow_steps\/111a5757-9b29-4895-9341-a568042562a1",
+            "label": "Could not find user",
+            "isExecuted": false,
+            "group": null,
+            "uuid": "7ec70951-1628-41c1-bcd4-702f68709301"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Check if user found -> Set found user",
+            "targetStep": "\/api\/3\/workflow_steps\/06cf07ad-e897-4ac5-af3e-277de3a951bd",
+            "sourceStep": "\/api\/3\/workflow_steps\/111a5757-9b29-4895-9341-a568042562a1",
+            "label": "Found user",
+            "isExecuted": false,
+            "group": null,
+            "uuid": "414b346e-b35a-4657-8a7f-d2859408aac4"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Create Task -> Update SNOW Task",
+            "targetStep": "\/api\/3\/workflow_steps\/7b74909a-6556-4abe-9a39-876622b5d35c",
+            "sourceStep": "\/api\/3\/workflow_steps\/3d2030ca-a1c4-4eb4-a01f-778b864a1984",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "782b601a-c4f8-4f0d-ac65-1e2e734ed594"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Create User -> Set found user",
+            "targetStep": "\/api\/3\/workflow_steps\/06cf07ad-e897-4ac5-af3e-277de3a951bd",
+            "sourceStep": "\/api\/3\/workflow_steps\/ab136645-6ad7-460d-b14b-6e1200594f67",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "024ad7ff-ea80-4d2d-a07f-922b49d322e5"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Set found user -> Set total users for group",
+            "targetStep": "\/api\/3\/workflow_steps\/0563b5c5-ccc7-4714-8d74-eeca483fa058",
+            "sourceStep": "\/api\/3\/workflow_steps\/06cf07ad-e897-4ac5-af3e-277de3a951bd",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "625b1dab-1cab-4f61-a211-56810d640a90"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Set total users for group -> Add user to group",
+            "targetStep": "\/api\/3\/workflow_steps\/cdd3f0ff-4331-4e9d-a1cf-2d76fc970e33",
+            "sourceStep": "\/api\/3\/workflow_steps\/0563b5c5-ccc7-4714-8d74-eeca483fa058",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "200b811f-a1e7-4747-b2f1-7f03ab9c06df"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Start -> Create Task",
+            "targetStep": "\/api\/3\/workflow_steps\/3d2030ca-a1c4-4eb4-a01f-778b864a1984",
+            "sourceStep": "\/api\/3\/workflow_steps\/16134a69-dd3f-446e-84c0-d87f8e9f7524",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "9d6296c0-0304-4107-9742-3996128f0d7c"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Update SNOW Task -> Build User query",
+            "targetStep": "\/api\/3\/workflow_steps\/78901d87-8b92-4ec6-a8f6-a57b93be5a6b",
+            "sourceStep": "\/api\/3\/workflow_steps\/7b74909a-6556-4abe-9a39-876622b5d35c",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "30856b6f-8719-4d6c-abe7-df459b39a39a"
+        }
+    ],
+    "groups": [],
+    "priority": "\/api\/3\/picklists\/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+    "playbookOrigin": "\/api\/3\/picklists\/b6d710a9-a8ec-41ec-8817-fe9fa062fcdd",
+    "isEditable": false,
+    "uuid": "98fb70ef-798a-4e25-a910-a502be022a9e",
+    "owners": [],
+    "isPrivate": false,
+    "deletedAt": null,
+    "recordTags": []
+}

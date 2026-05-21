@@ -1,0 +1,39 @@
+{
+    "name": "oTOps",
+    "version": "1.0.0",
+    "fsrMinCompatibility": "7.6.2",
+    "type": "solutionpack",
+    "local": true,
+    "label": "OT - Ops",
+    "dependencies": [],
+    "prerequisite": null,
+    "publisher": "Fortinet CSE",
+    "contributor": "Dylan Spille",
+    "description": "",
+    "help": null,
+    "category": [],
+    "supportInfo": null,
+    "iconLarge": null,
+    "postInstallConfig": null,
+    "date": "2026-05-14T10:41:29+00:00",
+    "contents": {
+        "playbooks": [
+            {
+                "name": "00 - EM Contractor Policy Automation"
+            },
+            {
+                "name": "00 - EM Fortigate Alerting"
+            }
+        ],
+        "connectors": [
+            {
+                "name": "Fortinet FortiAuthenticator",
+                "apiName": "fortinet-fortiauthenticator"
+            },
+            {
+                "name": "ServiceNow",
+                "apiName": "servicenow"
+            }
+        ]
+    }
+}

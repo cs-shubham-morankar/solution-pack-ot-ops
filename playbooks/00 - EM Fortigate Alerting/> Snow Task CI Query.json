@@ -1,0 +1,218 @@
+{
+    "@type": "Workflow",
+    "triggerLimit": null,
+    "name": "> Snow Task CI Query",
+    "aliasName": null,
+    "tag": null,
+    "description": "Lookup asset by serial number",
+    "isActive": true,
+    "debug": false,
+    "singleRecordExecution": false,
+    "remoteExecutableFlag": false,
+    "parameters": [
+        "asset_sys_id"
+    ],
+    "synchronous": false,
+    "collection": "\/api\/3\/workflow_collections\/3d593661-7ed2-48d3-8617-ca54399de5c1",
+    "versions": [],
+    "triggerStep": "\/api\/3\/workflow_steps\/a640f1c4-0845-4a52-87fa-ac406367936a",
+    "steps": [
+        {
+            "@type": "WorkflowStep",
+            "name": "Check if Asset Found",
+            "description": null,
+            "arguments": {
+                "conditions": [
+                    {
+                        "option": "Found CI Links",
+                        "step_iri": "\/api\/3\/workflow_steps\/32da0cb0-4b24-475a-b449-f9d1cd018b9a",
+                        "condition": "{{ vars.steps.get_task_CI_by_sys_id.data.result | length > 0 }}",
+                        "step_name": "Found CI Links"
+                    },
+                    {
+                        "option": "No Ci Links Found",
+                        "default": true,
+                        "step_iri": "\/api\/3\/workflow_steps\/0d64f987-67da-4949-b16b-77c93fc317f3",
+                        "step_name": "Error found no CI Links"
+                    }
+                ],
+                "step_variables": []
+            },
+            "status": null,
+            "top": "320",
+            "left": "380",
+            "stepType": "\/api\/3\/workflow_step_types\/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+            "group": null,
+            "uuid": "eccf0cb6-e840-456c-a23e-1b9cef4456b5"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Error found no CI Links",
+            "description": null,
+            "arguments": {
+                "params": {
+                    "msg": "No ci links found searching for asset id: `{{vars.input.params['asset_sys_id']}}`"
+                },
+                "version": "3.5.0",
+                "connector": "cyops_utilities",
+                "operation": "raise_exception",
+                "operationTitle": "Utils: Raise Exception",
+                "step_variables": []
+            },
+            "status": null,
+            "top": "220",
+            "left": "780",
+            "stepType": "\/api\/3\/workflow_step_types\/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+            "group": null,
+            "uuid": "0d64f987-67da-4949-b16b-77c93fc317f3"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Found CI Links",
+            "description": null,
+            "arguments": {
+                "ci_links": "{{vars.steps.get_task_CI_by_sys_id.data.result}}",
+                "change_sys_ids": "{{vars.steps.get_task_CI_by_sys_id.data.result | json_query('[].task.value')}}"
+            },
+            "status": null,
+            "top": "540",
+            "left": "480",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "32da0cb0-4b24-475a-b449-f9d1cd018b9a"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "get task CI by sys id",
+            "description": null,
+            "arguments": {
+                "name": "ServiceNow",
+                "config": "4212a59c-97cf-440b-b472-23cd84ec8e84",
+                "params": {
+                    "adv_query": "ci_item={{vars.input.params['asset_sys_id']}}",
+                    "table_name": "task_ci",
+                    "sysparm_limit": 10000
+                },
+                "version": "3.4.0",
+                "connector": "servicenow",
+                "operation": "advance_search",
+                "operationTitle": "Advanced Search",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "180",
+            "left": "240",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "a81ce502-af89-4c8d-82e4-e555e645235e"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Start",
+            "description": null,
+            "arguments": {
+                "__triggerLimit": true,
+                "step_variables": {
+                    "input": {
+                        "params": []
+                    }
+                },
+                "triggerOnSource": true,
+                "triggerOnReplicate": false
+            },
+            "status": null,
+            "top": "40",
+            "left": "40",
+            "stepType": "\/api\/3\/workflow_step_types\/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+            "group": null,
+            "uuid": "a640f1c4-0845-4a52-87fa-ac406367936a"
+        }
+    ],
+    "routes": [
+        {
+            "@type": "WorkflowRoute",
+            "name": "Check if Asset Found -> Error found no assets",
+            "targetStep": "\/api\/3\/workflow_steps\/0d64f987-67da-4949-b16b-77c93fc317f3",
+            "sourceStep": "\/api\/3\/workflow_steps\/eccf0cb6-e840-456c-a23e-1b9cef4456b5",
+            "label": "No Ci Links Found",
+            "isExecuted": false,
+            "group": null,
+            "uuid": "732ba544-be00-46ac-a6b3-852f124a02a2"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Check if Asset Found -> Found Asset",
+            "targetStep": "\/api\/3\/workflow_steps\/32da0cb0-4b24-475a-b449-f9d1cd018b9a",
+            "sourceStep": "\/api\/3\/workflow_steps\/eccf0cb6-e840-456c-a23e-1b9cef4456b5",
+            "label": "Found CI Links",
+            "isExecuted": false,
+            "group": null,
+            "uuid": "8ffccad6-8869-4d39-b15c-179ae8895294"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "get asset by serial -> Check if Asset Found",
+            "targetStep": "\/api\/3\/workflow_steps\/eccf0cb6-e840-456c-a23e-1b9cef4456b5",
+            "sourceStep": "\/api\/3\/workflow_steps\/a81ce502-af89-4c8d-82e4-e555e645235e",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "ec7d64f0-420c-4847-a9ea-bb50b78a1e46"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Start -> get task CI by sys id",
+            "targetStep": "\/api\/3\/workflow_steps\/a81ce502-af89-4c8d-82e4-e555e645235e",
+            "sourceStep": "\/api\/3\/workflow_steps\/a640f1c4-0845-4a52-87fa-ac406367936a",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "fffb643d-31c1-4052-aed7-bb1501c99868"
+        }
+    ],
+    "groups": [
+        {
+            "@type": "WorkflowGroup",
+            "name": "Input",
+            "description": "asset_sys_id: string",
+            "type": "note",
+            "isCollapsed": false,
+            "hasTriggerStep": false,
+            "hideInLogs": true,
+            "metadata": [],
+            "reusable": false,
+            "top": "20",
+            "left": "420",
+            "height": "0",
+            "width": "300",
+            "uuid": "eb0fb285-a1ba-46c5-9959-77d68cf912e0",
+            "recordTags": []
+        },
+        {
+            "@type": "WorkflowGroup",
+            "name": "Output",
+            "description": "change_sys_ids : list : list of change request sys ids\nci_links : list : full response of ci_links results",
+            "type": "note",
+            "isCollapsed": false,
+            "hasTriggerStep": false,
+            "hideInLogs": true,
+            "metadata": [],
+            "reusable": false,
+            "top": "540",
+            "left": "40",
+            "height": "144",
+            "width": "313",
+            "uuid": "e148103e-dd50-421a-b35c-676a33388ebd",
+            "recordTags": []
+        }
+    ],
+    "priority": "\/api\/3\/picklists\/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+    "playbookOrigin": "\/api\/3\/picklists\/b6d710a9-a8ec-41ec-8817-fe9fa062fcdd",
+    "isEditable": false,
+    "uuid": "9076ba9d-3ec2-4be2-a4ee-58fd7789e7fd",
+    "owners": [],
+    "isPrivate": false,
+    "deletedAt": null,
+    "recordTags": []
+}

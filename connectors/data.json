@@ -1,0 +1,28 @@
+[
+    {
+        "name": "fortinet-fortiauthenticator",
+        "label": "Fortinet FortiAuthenticator",
+        "category": [
+            "Authentication"
+        ],
+        "description": "FortiAuthenticator provides centralized authentication services for the Fortinet Security Fabric including single sign on services, certificate management, and guest management.",
+        "publisher": "Fortinet",
+        "operation_roles": [],
+        "configurations": [],
+        "dataImports": [],
+        "install_mode": "rpm"
+    },
+    {
+        "name": "servicenow",
+        "label": "ServiceNow",
+        "category": [
+            "CMDB"
+        ],
+        "description": "ServiceNow connector provides functionality to create, read, update and delete records of Table and Catalog type",
+        "publisher": "Fortinet",
+        "operation_roles": [],
+        "configurations": [],
+        "dataImports": [],
+        "install_mode": "rpm"
+    }
+]
