@@ -24,13 +24,13 @@ Navigate to the generated request and note the following:
 
 Users can launch the following playbooks:
 
-![automated_workflow.png](./images/Automation Workflow Processing.png)
+![automated_workflow](./images/Automation-Workflow-Processing.png)
 
 #### Sync SNOW User Requests
 
 Using this playbook, open requests are retrieved from **ServiceNow**, and groups are fetched from **FortiAuthenticator** for access assignment processing.
 
-![sync_snow.png](./images/Sync SNOW User Request.png)
+![sync_snow](./images/Sync SNOW-User-Request.png)
 
 ---
 
@@ -38,9 +38,9 @@ Using this playbook, open requests are retrieved from **ServiceNow**, and groups
 
 Using this playbook, a new network request task record is created in **ServiceNow** to track onboarding and provisioning workflow execution.
 
-![create_task.png](./images/Create New Task.png)
+![create_task](./images/Create-New-Task.png)
 
-![task_in_snow.png](./images/Task in SNOW.png)
+![task_in_snow](images/task-in-snow.png)
 
 ---
 
@@ -56,7 +56,7 @@ The workflow performs the following actions:
 * Assigns users to the appropriate group.
 * Updates ServiceNow with provisioning results.
 
-![create_fac_user.png](./images/Create FAC User Playbook.png)
+![create_fac_user](./images/Create-FAC-User-Playbook.png)
 
 ---
 
@@ -85,15 +85,15 @@ Navigate to the generated alert and note the following:
 
 Users can launch the following playbooks:
 
-![fortigate_alerting.png](./images/FortiGate Alerting.png)
+![fortigate_alerting](./images/FortiGate-Alerting.png)
 
 #### Receive FortiGate Trigger
 
 This playbook correlates FortiGate-triggered events with **ServiceNow** change records and determines whether to update an existing change record or create a new **P1 Incident**.
 
-![fortigate_trigger.png](./images/FortiGate Trigger.png)
+![fortigate_trigger](./images/FortiGate-Trigger.png)
 
-![fortigate_trigger_playbook.png](./images/FortiGate Trigger Playbook.png)
+![fortigate_trigger_playbook](./images/FortiGate-Trigger-Playbook.png)
 
 ---
 
@@ -101,7 +101,7 @@ This playbook correlates FortiGate-triggered events with **ServiceNow** change r
 
 Using this playbook, the extracted serial number is used to query the asset inventory and retrieve the corresponding asset details.
 
-![asset_query.png](./images/Asset Query Playbook.png)
+![asset_query](./images/Asset-Query-Playbook.png)
 
 ---
 
@@ -109,9 +109,9 @@ Using this playbook, the extracted serial number is used to query the asset inve
 
 Using this playbook, the asset information is used to query the associated **ServiceNow CI Tasks** for that asset.
 
-> ![task_ci.png](./images/Task CI Query Playbook.png)
+![task_ci](./images/Task-CI-Query-Playbook.png)
 
-> ![affected_assests.png](./images/Affected Assets.png)
+![affected_assests](./images/Affected-Assets.png)
 
 ---
 
@@ -126,11 +126,11 @@ The workflow performs the following actions:
 * Updates an existing ServiceNow record if a change is found.
 * Creates a **Priority 1 (P1) Incident** if no related change is identified.
 
-> ![snow_change.png](./images/SNOW Change Request Playbook.png)
+![snow_change](./images/SNOW-Change-Request-Playbook.png)
 
-> ![change_request.png](./images/Change Request.png)
+![change_request](./images/Change-Request.png)
 
-> ![change_detected.png](./images/Change Detected.png)
+![change_detected](./images/Change-Detected.png)
 
 ---
 
