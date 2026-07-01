@@ -1,0 +1,19 @@
+[
+  {
+    "@type": "Key",
+    "key": "ot-ops-configuration",
+    "value": null,
+    "jSONValue": {
+      "ciTaskTableName": "x_955905_test_x_fortinet_network_access",
+      "public_key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1WIZc1clBbiNouF6JzGi\nm+mAICI3RRe+N5nr3I12ovulm+IThEB6RosAc0ybKNAxRNpIP9h6eWhsrgINpnFR\nXFw3+yJ+qsnSmoubx1e2MzUBPXsJNnDtgzes7StUG7Dpr9PVXSc+I8djlDNcX\/c9\nasuocBPQ356OJQBHsVqnhweYHbpYOcDKg7AKXZSjV0TmlzTDhFL6HkEZtzYTLFZI\nt\/1RJC1kbvbq76jQO7yKUPWXAU8I1pUo4uAKa\/BU+ysXle90i2D5UbFpJWpGMLIY\nZGpW7bB1pcRmbPzoZv8Qjp4KnZKLNHCTgVqkRJZVtwRFWl04vNDXMBr0IiiDAfXO\n2QIDAQAB\n-----END PUBLIC KEY-----",
+      "private_key": "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA1WIZc1clBbiNouF6JzGim+mAICI3RRe+N5nr3I12ovulm+IT\nhEB6RosAc0ybKNAxRNpIP9h6eWhsrgINpnFRXFw3+yJ+qsnSmoubx1e2MzUBPXsJ\nNnDtgzes7StUG7Dpr9PVXSc+I8djlDNcX\/c9asuocBPQ356OJQBHsVqnhweYHbpY\nOcDKg7AKXZSjV0TmlzTDhFL6HkEZtzYTLFZIt\/1RJC1kbvbq76jQO7yKUPWXAU8I\n1pUo4uAKa\/BU+ysXle90i2D5UbFpJWpGMLIYZGpW7bB1pcRmbPzoZv8Qjp4KnZKL\nNHCTgVqkRJZVtwRFWl04vNDXMBr0IiiDAfXO2QIDAQABAoIBAAZ+ckzW0ZsfdzwG\nRavssEizbgFMWUdChjj1974iFgK2yt74HeTv+2irMUvRAIXY9C7mv70lrvCD847G\nJDk1CKdZbSC494bmFoE6j3adHj\/ntI508J5WCHxuVNZw86HWG\/6MYVlw6My49Dhd\n6clH4ngeE5W5nKk5j5Tjscrdeey7ibUDm0b3CGGG9DZ5KArRzSo+Y2StJ7\/GEpVw\nxFdEcyyOzQXbwU280J5LPOS5dqoXLYRYSpJEScQhiXv\/wQM04eyvKhi77XWaLBqX\ntqK7tyeRn9YcOKwQdk16TBQ1q9Mc532mx+T5J6w3JgGn9LIA2e8hii3IUcPuErJ7\nx7FJCOMCgYEA5yvANB3Ts3\/l0gPb373L8hGeNVZg9JxU8MBks8soPDANWlYvyOnm\nJDAAgJQaxeI1ngJIxFa8vIvcyE+XElPjw+ifHGIdvt79jxm1YsOjI7T1C7mWy+sN\njuqeV0ytnw50hVo8DqykWntuhCkr6Xkzumdto5zUB0JAXB7oXyadTH8CgYEA7E1C\njxUE+7trh2zc9SWW\/eLD+YnXA0U8A4ws+wDQS2xHz7NiywLmgKdqzlgSSG\/MBiZC\ny\/fwCTKV82z86K7dazihK7MsveCvI\/Fq7YIxDEQOHDI7UcVZrLYVNLAS7loDEMaL\nO87Vs77GCk\/quw4wjw77\/jRlWX3Sji+6TztTGKcCgYEAqJl6JwiR\/FqNjWyPElHk\nyvoafyAuunjCYoyPZaoIAE2zj21IkKo21bHEzAI4vJZNMJ7N35S7NnBzaAzUS+Ov\nPJUOZq8QrsMH\/zRq3Et\/Um2KQzDqUHNwggmPzm\/4OQdb6F51auZzQCLB6dX1VuS0\n24DPsAKTiW\/CbO2F4M\/S7ZUCgYA8I2GIFpphEo7INX16ammmDZtAm8L70xf18yvT\naZ6ZQ2J3Srke34sYPQNipmloxAMRoZUoYd5WCOi+vgMTmMVDL3NdMsl1PYR1SlCj\nR5oB\/CP3KxWLtwUefmyhLxpyTLgxAcaXnwkmKKwwHayolHDpR6\/8Pwt4HhyDEUSC\nO5\/nSwKBgEEIsYq3Ig6MVRaugFsC9\/X2PJJgYGjv8o6ppp8ePL8BBOGtMHaLoqg+\nfDv1PR6y55DEwwoMQ0YgfWsitfwELCTyRoXxPOZvJ7cIAXPh6mY+D3QK+MzwdzX5\nstOyh6aPPws9Ah9hjYcjwkz224UwpOAKfc5Jcux\/q0usMAYGtCfD\n-----END RSA PRIVATE KEY-----"
+    },
+    "notes": null,
+    "uuid": "4bad0ea1-3598-4a97-833d-2ecdcd12034e",
+    "createUser": "\/api\/3\/people\/3451141c-bac6-467c-8d72-85e0fab569ce",
+    "createDate": 1782899795.398054,
+    "modifyUser": "\/api\/3\/people\/3451141c-bac6-467c-8d72-85e0fab569ce",
+    "modifyDate": 1782899994.98603,
+    "recordTags": []
+  }
+]

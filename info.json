@@ -1,39 +1,58 @@
 {
-    "name": "oTOps",
-    "version": "1.0.0",
-    "fsrMinCompatibility": "7.6.2",
-    "type": "solutionpack",
-    "local": true,
-    "label": "OT - Ops",
-    "dependencies": [],
-    "prerequisite": null,
-    "publisher": "Fortinet CSE",
-    "contributor": "Dylan Spille",
-    "description": "",
-    "help": null,
-    "category": [],
-    "supportInfo": null,
-    "iconLarge": null,
-    "postInstallConfig": null,
-    "date": "2026-05-14T10:41:29+00:00",
-    "contents": {
-        "playbooks": [
-            {
-                "name": "00 - EM Contractor Policy Automation"
-            },
-            {
-                "name": "00 - EM Fortigate Alerting"
-            }
-        ],
-        "connectors": [
-            {
-                "name": "Fortinet FortiAuthenticator",
-                "apiName": "fortinet-fortiauthenticator"
-            },
-            {
-                "name": "ServiceNow",
-                "apiName": "servicenow"
-            }
-        ]
+  "name": "oTOps",
+  "version": "1.0.0",
+  "fsrMinCompatibility": "7.6.2",
+  "type": "solutionpack",
+  "local": true,
+  "label": "OT - Ops",
+  "prerequisite": null,
+  "publisher": "Fortinet CSE",
+  "contributor": "Dylan Spille",
+  "dependencies": [
+    {
+      "name": "sOARFramework",
+      "type": "solutionpack",
+      "label": "SOAR Framework",
+      "minVersion": null
     }
+  ],
+  "description": "This solution pack includes automated workflows for user access provisioning and FortiGate change monitoring to streamline operational processes and reduce manual effort.",
+  "help": null,
+  "category": [],
+  "supportInfo": null,
+  "iconLarge": null,
+  "postInstallConfig": null,
+  "date": "2026-05-14T10:41:29+00:00",
+  "contents": {
+    "playbooks": [
+      {
+        "name": "01 - Use Case - Contractor Policy Automation"
+      },
+      {
+        "name": "02 - Use Case - FortiGate Alerting"
+      }
+    ],
+    "connectors": [
+      {
+        "name": "Fortinet FortiAuthenticator",
+        "apiName": "fortinet-fortiauthenticator"
+      },
+      {
+        "name": "ServiceNow",
+        "apiName": "servicenow"
+      }
+    ],
+    "recordSets": [
+      {
+        "name": "Key Store",
+        "apiName": "keys",
+        "count": 1
+      }
+    ],
+    "roles": [
+      {
+        "name": "Full App Permissions"
+      }
+    ]
+  }
 }

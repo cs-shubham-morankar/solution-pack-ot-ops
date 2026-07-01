@@ -1,10 +1,10 @@
 {
     "@type": "Workflow",
     "triggerLimit": null,
-    "name": "Create new Task Record",
+    "name": "Create New Task Record",
     "aliasName": null,
     "tag": null,
-    "description": null,
+    "description": "This playbook creates a new network request task record in ServiceNow to track the onboarding and provisioning workflow execution.",
     "isActive": true,
     "debug": false,
     "singleRecordExecution": false,
@@ -17,7 +17,7 @@
     "steps": [
         {
             "@type": "WorkflowStep",
-            "name": "Create new network request",
+            "name": "Create New Network Request",
             "description": null,
             "arguments": {
                 "name": "ServiceNow",
@@ -67,7 +67,7 @@
     "routes": [
         {
             "@type": "WorkflowRoute",
-            "name": "Start -> delete comments",
+            "name": "Start -> Delete Comments",
             "targetStep": "\/api\/3\/workflow_steps\/e4f7be38-faf1-48d7-97eb-6e6e96e244ba",
             "sourceStep": "\/api\/3\/workflow_steps\/c3e19dc5-8e46-4a4d-97f3-42a8d4f0ebc6",
             "label": null,
@@ -102,5 +102,8 @@
     "owners": [],
     "isPrivate": false,
     "deletedAt": null,
-    "recordTags": []
+    "recordTags": [
+        "Referenced",
+        "Subroutine"
+    ]
 }

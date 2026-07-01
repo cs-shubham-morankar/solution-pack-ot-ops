@@ -10,7 +10,9 @@
 
 ## Prerequisites
 
-- None
+| Solution Pack Name | Version          | Purpose                                |
+|:-------------------|:-----------------|:---------------------------------------|
+| SOAR Framework     | v2.0.0 and later | Required for Incident Response modules |
 
 # Configuration
 

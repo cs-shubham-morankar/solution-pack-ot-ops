@@ -1,0 +1,221 @@
+{
+  "@type": "Workflow",
+  "triggerLimit": null,
+  "name": "> Snow Change Query",
+  "aliasName": null,
+  "tag": null,
+  "description": "This playbook identifies configuration or operational changes occurring within a ±30-minute window of the event time.",
+  "isActive": true,
+  "debug": false,
+  "singleRecordExecution": false,
+  "remoteExecutableFlag": false,
+  "parameters": [
+    "change_query"
+  ],
+  "synchronous": false,
+  "collection": "\/api\/3\/workflow_collections\/3d593661-7ed2-48d3-8617-ca54399de5c1",
+  "versions": [],
+  "triggerStep": "\/api\/3\/workflow_steps\/a8211800-12cc-41ab-944b-5a7e338284c7",
+  "steps": [
+    {
+      "@type": "WorkflowStep",
+      "name": "Check If Change Found",
+      "description": null,
+      "arguments": {
+        "conditions": [
+          {
+            "option": "Found Change",
+            "step_iri": "\/api\/3\/workflow_steps\/6a06a803-4d08-43fd-9a0b-0fc85a279190",
+            "condition": "{{ vars.steps.get_change_request_by_sys_id.data.result | length > 0 }}",
+            "step_name": "Found Change"
+          },
+          {
+            "option": "No Change Found",
+            "default": true,
+            "step_iri": "\/api\/3\/workflow_steps\/29064ff5-4c6f-45c9-a31b-8e2f41b7d863",
+            "step_name": "Error Found No Change"
+          }
+        ],
+        "step_variables": []
+      },
+      "status": null,
+      "top": "320",
+      "left": "380",
+      "stepType": "\/api\/3\/workflow_step_types\/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+      "group": null,
+      "uuid": "f061ed92-b355-4bf6-bece-587ae766aeae"
+    },
+    {
+      "@type": "WorkflowStep",
+      "name": "Error Found No Change",
+      "description": null,
+      "arguments": {
+        "params": {
+          "msg": "No changes found searching for query: `{{vars.input.params['change_query']}}`"
+        },
+        "version": "3.5.0",
+        "connector": "cyops_utilities",
+        "operation": "raise_exception",
+        "ignore_errors": true,
+        "operationTitle": "Utils: Raise Exception",
+        "step_variables": []
+      },
+      "status": null,
+      "top": "220",
+      "left": "780",
+      "stepType": "\/api\/3\/workflow_step_types\/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+      "group": null,
+      "uuid": "29064ff5-4c6f-45c9-a31b-8e2f41b7d863"
+    },
+    {
+      "@type": "WorkflowStep",
+      "name": "Found Change",
+      "description": null,
+      "arguments": {
+        "changes": "{{vars.steps.get_change_request_by_sys_id.data.result}}"
+      },
+      "status": null,
+      "top": "540",
+      "left": "380",
+      "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+      "group": null,
+      "uuid": "6a06a803-4d08-43fd-9a0b-0fc85a279190"
+    },
+    {
+      "@type": "WorkflowStep",
+      "name": "Get Change Request By Sys ID",
+      "description": null,
+      "arguments": {
+        "name": "ServiceNow",
+        "config": "4212a59c-97cf-440b-b472-23cd84ec8e84",
+        "params": {
+          "adv_query": "{{vars.input.params['change_query']}}",
+          "table_name": "change_request",
+          "sysparm_limit": 10000
+        },
+        "version": "3.4.0",
+        "connector": "servicenow",
+        "operation": "advance_search",
+        "operationTitle": "Advanced Search",
+        "pickFromTenant": false,
+        "step_variables": []
+      },
+      "status": null,
+      "top": "180",
+      "left": "240",
+      "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+      "group": null,
+      "uuid": "89790658-ce57-4bda-a4eb-d2a9bdf9d977"
+    },
+    {
+      "@type": "WorkflowStep",
+      "name": "Start",
+      "description": null,
+      "arguments": {
+        "__triggerLimit": true,
+        "step_variables": {
+          "input": {
+            "params": []
+          }
+        },
+        "triggerOnSource": true,
+        "triggerOnReplicate": false
+      },
+      "status": null,
+      "top": "40",
+      "left": "40",
+      "stepType": "\/api\/3\/workflow_step_types\/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+      "group": null,
+      "uuid": "a8211800-12cc-41ab-944b-5a7e338284c7"
+    }
+  ],
+  "routes": [
+    {
+      "@type": "WorkflowRoute",
+      "name": "Check If Asset Found -> Error Found No Assets",
+      "targetStep": "\/api\/3\/workflow_steps\/29064ff5-4c6f-45c9-a31b-8e2f41b7d863",
+      "sourceStep": "\/api\/3\/workflow_steps\/f061ed92-b355-4bf6-bece-587ae766aeae",
+      "label": "No Change Found",
+      "isExecuted": false,
+      "group": null,
+      "uuid": "e24ffddc-1cac-46b3-93a5-afc3a1a18b01"
+    },
+    {
+      "@type": "WorkflowRoute",
+      "name": "Check If Asset Found -> Found Asset",
+      "targetStep": "\/api\/3\/workflow_steps\/6a06a803-4d08-43fd-9a0b-0fc85a279190",
+      "sourceStep": "\/api\/3\/workflow_steps\/f061ed92-b355-4bf6-bece-587ae766aeae",
+      "label": "Found Change",
+      "isExecuted": false,
+      "group": null,
+      "uuid": "2f546873-a23e-4ec8-99e1-e14a82cb90b2"
+    },
+    {
+      "@type": "WorkflowRoute",
+      "name": "Get Asset By Serial -> Check If Asset Found",
+      "targetStep": "\/api\/3\/workflow_steps\/f061ed92-b355-4bf6-bece-587ae766aeae",
+      "sourceStep": "\/api\/3\/workflow_steps\/89790658-ce57-4bda-a4eb-d2a9bdf9d977",
+      "label": null,
+      "isExecuted": false,
+      "group": null,
+      "uuid": "3ffabc23-676d-402e-874e-8aed2e82acf1"
+    },
+    {
+      "@type": "WorkflowRoute",
+      "name": "Start -> Get Assets",
+      "targetStep": "\/api\/3\/workflow_steps\/89790658-ce57-4bda-a4eb-d2a9bdf9d977",
+      "sourceStep": "\/api\/3\/workflow_steps\/a8211800-12cc-41ab-944b-5a7e338284c7",
+      "label": null,
+      "isExecuted": false,
+      "group": null,
+      "uuid": "2504fafe-e7e3-48f6-a115-4313085c381f"
+    }
+  ],
+  "groups": [
+    {
+      "@type": "WorkflowGroup",
+      "name": "Input",
+      "description": "change_query: string : query for changes uses advanced filter for status, datetime, and containing firewall CI's",
+      "type": "note",
+      "isCollapsed": false,
+      "hasTriggerStep": false,
+      "hideInLogs": true,
+      "metadata": [],
+      "reusable": false,
+      "top": "20",
+      "left": "420",
+      "height": "116",
+      "width": "394",
+      "uuid": "96e4c0a0-577d-46ae-89b1-4569cb326900",
+      "recordTags": []
+    },
+    {
+      "@type": "WorkflowGroup",
+      "name": "Output",
+      "description": "changes: list: list of matching change dictionaries",
+      "type": "note",
+      "isCollapsed": false,
+      "hasTriggerStep": false,
+      "hideInLogs": true,
+      "metadata": [],
+      "reusable": false,
+      "top": "540",
+      "left": "40",
+      "height": "298",
+      "width": "318",
+      "uuid": "0f2a8e15-01b6-447c-9f61-df5d315985e2",
+      "recordTags": []
+    }
+  ],
+  "priority": "\/api\/3\/picklists\/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+  "playbookOrigin": "\/api\/3\/picklists\/b6d710a9-a8ec-41ec-8817-fe9fa062fcdd",
+  "isEditable": false,
+  "uuid": "038f227e-c498-4192-a956-a3872703d79e",
+  "owners": [],
+  "isPrivate": false,
+  "deletedAt": null,
+  "recordTags": [
+    "Referenced",
+    "Subroutine"
+  ]
+}

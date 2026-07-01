@@ -1,10 +1,13 @@
 # Usage
 
-This solution pack includes automated workflows for **user access provisioning**, **ServiceNow request processing**, and **FortiGate operational alert monitoring** to streamline operational processes and reduce manual intervention.
+This solution pack includes automated workflows for **user access provisioning**, **ServiceNow request processing**, and
+**FortiGate operational alert monitoring** to streamline operational processes and reduce manual intervention.
 
 ---
 
 ## Contractor Access Provisioning
+
+---
 
 This scenario automates onboarding and access provisioning by integrating **ServiceNow** and **FortiAuthenticator**.
 
@@ -15,10 +18,12 @@ Navigate to the generated request and note the following:
 * ServiceNow records remain synchronized with FortiAuthenticator operations.
 * The request contains:
 
-  * Request details
-  * User information
-  * Requested access group
-  * Approval and task information
+    * Request details
+    * User information
+    * Requested access group
+    * Approval and task information
+
+---
 
 ### Automated Workflow Processing
 
@@ -26,17 +31,21 @@ Users can launch the following playbooks:
 
 ![automated_workflow](./images/Automation-Workflow-Processing.png)
 
+---
+
 #### Sync SNOW User Requests
 
-Using this playbook, open requests are retrieved from **ServiceNow**, and groups are fetched from **FortiAuthenticator** for access assignment processing.
+Using this playbook, open requests are retrieved from **ServiceNow**, and groups are fetched from **FortiAuthenticator**
+for access assignment processing.
 
-![sync_snow](./images/Sync SNOW-User-Request.png)
+![sync_snow](./images/Sync-SNOW-User-Request.png)
 
 ---
 
 #### Create new Task Record
 
-Using this playbook, a new network request task record is created in **ServiceNow** to track onboarding and provisioning workflow execution.
+Using this playbook, a new network request task record is created in **ServiceNow** to track onboarding and provisioning
+workflow execution.
 
 ![create_task](./images/Create-New-Task.png)
 
@@ -44,9 +53,10 @@ Using this playbook, a new network request task record is created in **ServiceNo
 
 ---
 
-#### Create FAC user per task found
+#### Create FAC User Per Task Found
 
-Using this playbook, the workflow automates user provisioning and group assignment in **FortiAuthenticator**, while maintaining synchronization and status updates in **ServiceNow**.
+Using this playbook, the workflow automates user provisioning and group assignment in **FortiAuthenticator**, while
+maintaining synchronization and status updates in **ServiceNow**.
 
 The workflow performs the following actions:
 
@@ -66,7 +76,10 @@ This automation reduces manual effort for user onboarding and ensures consistent
 
 ## FortiGate Alerting
 
-This scenario processes operational alerts received from **FortiGate** through webhook integration and correlates them with **ServiceNow** records.
+---
+
+This scenario processes operational alerts received from **FortiGate** through webhook integration and correlates them
+with **ServiceNow** records.
 
 Navigate to the generated alert and note the following:
 
@@ -75,11 +88,13 @@ Navigate to the generated alert and note the following:
 * Events are correlated with ServiceNow operational records.
 * The alert contains:
 
-  * Device serial number
-  * Event information
-  * Asset details
-  * ServiceNow CI records
-  * Change monitoring details
+    * Device serial number
+    * Event information
+    * Asset details
+    * ServiceNow CI records
+    * Change monitoring details
+
+---
 
 ### Automated Workflow Processing
 
@@ -87,9 +102,12 @@ Users can launch the following playbooks:
 
 ![fortigate_alerting](./images/FortiGate-Alerting.png)
 
+---
+
 #### Receive FortiGate Trigger
 
-This playbook correlates FortiGate-triggered events with **ServiceNow** change records and determines whether to update an existing change record or create a new **P1 Incident**.
+This playbook correlates FortiGate-triggered events with **ServiceNow** change records and determines whether to update
+an existing change record or create a new **P1 Incident**.
 
 ![fortigate_trigger](./images/FortiGate-Trigger.png)
 
@@ -99,7 +117,8 @@ This playbook correlates FortiGate-triggered events with **ServiceNow** change r
 
 #### Snow Firewall Asset Query
 
-Using this playbook, the extracted serial number is used to query the asset inventory and retrieve the corresponding asset details.
+Using this playbook, the extracted serial number is used to query the asset inventory and retrieve the corresponding
+asset details.
 
 ![asset_query](./images/Asset-Query-Playbook.png)
 
@@ -117,7 +136,8 @@ Using this playbook, the asset information is used to query the associated **Ser
 
 #### Snow Change Query
 
-Using this playbook, the workflow identifies any configuration or operational changes that occurred within a **±30-minute window** of the event time.
+Using this playbook, the workflow identifies any configuration or operational changes that occurred within a *
+*±30-minute window** of the event time.
 
 The workflow performs the following actions:
 
@@ -134,4 +154,7 @@ The workflow performs the following actions:
 
 ---
 
-This automation improves operational visibility by correlating FortiGate alerts with change management activities and automatically initiating incident response workflows.
+This automation improves operational visibility by correlating FortiGate alerts with change management activities and
+automatically initiating incident response workflows.
+
+---

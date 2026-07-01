@@ -15,8 +15,8 @@
 
 ## Playbook Collection
 
-| 00 - EM Contractor Policy Automation |
-| :----------------------------------------------- |
+| 01 - Use Case - Contractor Policy Automation |
+|:---------------------------------------------|
 
 | Playbook Name                              | Description                                                                                                                                                                   |
 |:-------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -24,8 +24,8 @@
 | Create new Task Record                     | Using this playbook, to create a new network request record in ServiceNow.                                                                                                    |
 | > Create FAC user per task found           | Using this playbook, the workflow automates user provisioning and group assignment in FortiAuthenticator, while maintaining synchronization and status updates in ServiceNow. |
 
-| 00 - EM Fortigate Alerting |
-| :----------------------------------------------- |
+| 02 - Use Case - FortiGate Alerting |
+|:-----------------------------------|
 
 | Playbook Name                               | Description                                                                                                                                                                                                                                                         |
 |:--------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

@@ -1,0 +1,11 @@
+{
+  "@context": "\/api\/3\/contexts\/WorkflowCollection",
+  "@type": "WorkflowCollection",
+  "name": "02 - Use Case - FortiGate Alerting",
+  "description": null,
+  "visible": true,
+  "image": null,
+  "uuid": "3d593661-7ed2-48d3-8617-ca54399de5c1",
+  "deletedAt": null,
+  "recordTags": []
+}

@@ -1,0 +1,257 @@
+{
+  "@type": "Workflow",
+  "triggerLimit": null,
+  "name": "> Snow Firewall Asset Query",
+  "aliasName": null,
+  "tag": null,
+  "description": "This playbook uses the extracted serial number to query the asset inventory and retrieve corresponding asset details.",
+  "isActive": true,
+  "debug": false,
+  "singleRecordExecution": false,
+  "remoteExecutableFlag": false,
+  "parameters": [
+    "device_serial"
+  ],
+  "synchronous": false,
+  "collection": "\/api\/3\/workflow_collections\/3d593661-7ed2-48d3-8617-ca54399de5c1",
+  "versions": [],
+  "triggerStep": "\/api\/3\/workflow_steps\/947769d7-ef51-430b-a1b8-2963dac3065d",
+  "steps": [
+    {
+      "@type": "WorkflowStep",
+      "name": "Check If Asset Found",
+      "description": null,
+      "arguments": {
+        "conditions": [
+          {
+            "option": "Error: Found Too Many Assets",
+            "step_iri": "\/api\/3\/workflow_steps\/ab29c834-1e4b-4569-a7fb-d55c338c7562",
+            "condition": "{{ vars.steps.get_asset_by_serial.data.result | length > 1 }}",
+            "step_name": "Error Found Multiple Assets"
+          },
+          {
+            "option": "Found 1 asset",
+            "step_iri": "\/api\/3\/workflow_steps\/165422b9-2125-4091-a861-44d46918ea50",
+            "condition": "{{ vars.steps.get_asset_by_serial.data.result | length > 0 }}",
+            "step_name": "Found Asset"
+          },
+          {
+            "option": "No Assets Found",
+            "default": true,
+            "step_iri": "\/api\/3\/workflow_steps\/c666322f-c179-47b2-9e3b-f6a6d6236bd2",
+            "step_name": "Error Found No Assets"
+          }
+        ],
+        "step_variables": []
+      },
+      "status": null,
+      "top": "320",
+      "left": "380",
+      "stepType": "\/api\/3\/workflow_step_types\/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+      "group": null,
+      "uuid": "00183de4-5a0d-44dd-8152-bbf65515936c"
+    },
+    {
+      "@type": "WorkflowStep",
+      "name": "Error Found Multiple Assets",
+      "description": null,
+      "arguments": {
+        "params": {
+          "msg": "Too many assets found: {{vars.steps.get_asset_by_serial.data.result | json_query('[].name') | join(', ')}}"
+        },
+        "version": "3.5.0",
+        "connector": "cyops_utilities",
+        "operation": "raise_exception",
+        "operationTitle": "Utils: Raise Exception",
+        "step_variables": []
+      },
+      "status": null,
+      "top": "520",
+      "left": "780",
+      "stepType": "\/api\/3\/workflow_step_types\/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+      "group": null,
+      "uuid": "ab29c834-1e4b-4569-a7fb-d55c338c7562"
+    },
+    {
+      "@type": "WorkflowStep",
+      "name": "Error Found No Assets",
+      "description": null,
+      "arguments": {
+        "params": {
+          "msg": "No assets found searching for serial: `{{vars.input.params['device_serial']}}`"
+        },
+        "version": "3.5.0",
+        "connector": "cyops_utilities",
+        "operation": "raise_exception",
+        "operationTitle": "Utils: Raise Exception",
+        "step_variables": []
+      },
+      "status": null,
+      "top": "220",
+      "left": "780",
+      "stepType": "\/api\/3\/workflow_step_types\/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+      "group": null,
+      "uuid": "c666322f-c179-47b2-9e3b-f6a6d6236bd2"
+    },
+    {
+      "@type": "WorkflowStep",
+      "name": "Found Asset",
+      "description": null,
+      "arguments": {
+        "asset": "{{vars.steps.get_asset_by_serial.data.result[0]}}"
+      },
+      "status": null,
+      "top": "540",
+      "left": "380",
+      "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+      "group": null,
+      "uuid": "165422b9-2125-4091-a861-44d46918ea50"
+    },
+    {
+      "@type": "WorkflowStep",
+      "name": "Get Asset By Serial",
+      "description": null,
+      "arguments": {
+        "name": "ServiceNow",
+        "config": "4212a59c-97cf-440b-b472-23cd84ec8e84",
+        "params": {
+          "adv_query": "serial_number={{vars.input.params['device_serial']}}",
+          "table_name": "cmdb_ci_ip_firewall",
+          "sysparm_limit": 10000
+        },
+        "version": "3.4.0",
+        "connector": "servicenow",
+        "operation": "advance_search",
+        "operationTitle": "Advanced Search",
+        "pickFromTenant": false,
+        "step_variables": []
+      },
+      "status": null,
+      "top": "180",
+      "left": "240",
+      "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+      "group": null,
+      "uuid": "2a6391c6-af74-4cb1-89a8-f50c73462303"
+    },
+    {
+      "@type": "WorkflowStep",
+      "name": "Start",
+      "description": null,
+      "arguments": {
+        "__triggerLimit": true,
+        "step_variables": {
+          "input": {
+            "params": []
+          }
+        },
+        "triggerOnSource": true,
+        "triggerOnReplicate": false
+      },
+      "status": null,
+      "top": "40",
+      "left": "40",
+      "stepType": "\/api\/3\/workflow_step_types\/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+      "group": null,
+      "uuid": "947769d7-ef51-430b-a1b8-2963dac3065d"
+    }
+  ],
+  "routes": [
+    {
+      "@type": "WorkflowRoute",
+      "name": "Check If Asset Found -> Error Found Multiple Assets",
+      "targetStep": "\/api\/3\/workflow_steps\/ab29c834-1e4b-4569-a7fb-d55c338c7562",
+      "sourceStep": "\/api\/3\/workflow_steps\/00183de4-5a0d-44dd-8152-bbf65515936c",
+      "label": "Error: Found too many assets",
+      "isExecuted": false,
+      "group": null,
+      "uuid": "a345066a-918e-41ff-8ebb-38c09f35e1f2"
+    },
+    {
+      "@type": "WorkflowRoute",
+      "name": "Check If Asset Found -> Error Found No Assets",
+      "targetStep": "\/api\/3\/workflow_steps\/c666322f-c179-47b2-9e3b-f6a6d6236bd2",
+      "sourceStep": "\/api\/3\/workflow_steps\/00183de4-5a0d-44dd-8152-bbf65515936c",
+      "label": "No Assets Found",
+      "isExecuted": false,
+      "group": null,
+      "uuid": "9b47a07b-12bf-4db9-871b-570e7b42a1dd"
+    },
+    {
+      "@type": "WorkflowRoute",
+      "name": "Check If Asset Found -> Found Asset",
+      "targetStep": "\/api\/3\/workflow_steps\/165422b9-2125-4091-a861-44d46918ea50",
+      "sourceStep": "\/api\/3\/workflow_steps\/00183de4-5a0d-44dd-8152-bbf65515936c",
+      "label": "Found 1 asset",
+      "isExecuted": false,
+      "group": null,
+      "uuid": "6195ba6f-082b-4a56-8de1-e87903f6959d"
+    },
+    {
+      "@type": "WorkflowRoute",
+      "name": "Get Asset By Serial -> Check If Asset Found",
+      "targetStep": "\/api\/3\/workflow_steps\/00183de4-5a0d-44dd-8152-bbf65515936c",
+      "sourceStep": "\/api\/3\/workflow_steps\/2a6391c6-af74-4cb1-89a8-f50c73462303",
+      "label": null,
+      "isExecuted": false,
+      "group": null,
+      "uuid": "d613bff9-17d2-4552-ac02-4b656611e99b"
+    },
+    {
+      "@type": "WorkflowRoute",
+      "name": "Start -> Get Assets",
+      "targetStep": "\/api\/3\/workflow_steps\/2a6391c6-af74-4cb1-89a8-f50c73462303",
+      "sourceStep": "\/api\/3\/workflow_steps\/947769d7-ef51-430b-a1b8-2963dac3065d",
+      "label": null,
+      "isExecuted": false,
+      "group": null,
+      "uuid": "d37f5cbe-3388-4bee-92aa-a226355d844e"
+    }
+  ],
+  "groups": [
+    {
+      "@type": "WorkflowGroup",
+      "name": "Input",
+      "description": "device_serial: string",
+      "type": "note",
+      "isCollapsed": false,
+      "hasTriggerStep": false,
+      "hideInLogs": true,
+      "metadata": [],
+      "reusable": false,
+      "top": "20",
+      "left": "420",
+      "height": "0",
+      "width": "300",
+      "uuid": "eceef53e-69c4-4f4b-a7a1-f28342ea680a",
+      "recordTags": []
+    },
+    {
+      "@type": "WorkflowGroup",
+      "name": "Output",
+      "description": "Single Asset record dictionary\n\n'asset': {\n    'ram': '4096',\n    'fqdn': 'edge-chi-09.chi-pop1.company.local',\n    'name': 'edge-chi-09',\n    'asset': '',\n    'ports': '16',\n    'sys_id': ...\n    ....\n}",
+      "type": "note",
+      "isCollapsed": false,
+      "hasTriggerStep": false,
+      "hideInLogs": true,
+      "metadata": [],
+      "reusable": false,
+      "top": "540",
+      "left": "40",
+      "height": "298",
+      "width": "318",
+      "uuid": "7b4379da-6546-432e-8f14-96979a5b7a44",
+      "recordTags": []
+    }
+  ],
+  "priority": "\/api\/3\/picklists\/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+  "playbookOrigin": "\/api\/3\/picklists\/b6d710a9-a8ec-41ec-8817-fe9fa062fcdd",
+  "isEditable": false,
+  "uuid": "c95cd28a-57ff-4aa2-9355-c1f6e279f400",
+  "owners": [],
+  "isPrivate": false,
+  "deletedAt": null,
+  "recordTags": [
+    "Referenced",
+    "Subroutine"
+  ]
+}

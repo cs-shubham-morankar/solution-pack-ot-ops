@@ -1,0 +1,11 @@
+{
+  "@context": "\/api\/3\/contexts\/WorkflowCollection",
+  "@type": "WorkflowCollection",
+  "name": "01 - Use Case - Contractor Policy Automation",
+  "description": null,
+  "visible": true,
+  "image": null,
+  "uuid": "2f6fbe49-e056-43b9-9abf-7fd5bd320aed",
+  "deletedAt": null,
+  "recordTags": []
+}
