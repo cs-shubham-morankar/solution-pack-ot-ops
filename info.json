@@ -48,11 +48,6 @@
         "apiName": "keys",
         "count": 1
       }
-    ],
-    "roles": [
-      {
-        "name": "Full App Permissions"
-      }
     ]
   }
 }
