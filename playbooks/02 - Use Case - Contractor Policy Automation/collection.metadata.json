@@ -1,7 +1,7 @@
 {
   "@context": "\/api\/3\/contexts\/WorkflowCollection",
   "@type": "WorkflowCollection",
-  "name": "01 - Use Case - Contractor Policy Automation",
+  "name": "02 - Use Case - Contractor Policy Automation",
   "description": null,
   "visible": true,
   "image": null,

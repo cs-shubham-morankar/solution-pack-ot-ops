@@ -17,7 +17,7 @@
     }
   ],
   "description": "This solution pack includes automated workflows for user access provisioning and FortiGate change monitoring to streamline operational processes and reduce manual effort.",
-  "help": null,
+  "help": "https://github.com/fortinet-fortisoar/solution-pack-ot-ops/blob/release/1.0.0/README.md",
   "category": [],
   "supportInfo": null,
   "iconLarge": null,
@@ -26,7 +26,7 @@
   "contents": {
     "playbooks": [
       {
-        "name": "01 - Use Case - Contractor Policy Automation"
+        "name": "02 - Use Case - Contractor Policy Automation"
       },
       {
         "name": "02 - Use Case - FortiGate Alerting"

@@ -62,8 +62,8 @@
         },
         "version": "1.0.0",
         "connector": "fortinet-fortiauthenticator",
-        "operation": "make_generic_request",
-        "operationTitle": "Make Generic Request",
+        "operation": "execute_an_api_request",
+        "operationTitle": "Execute an API Request",
         "pickFromTenant": false,
         "step_variables": []
       },
@@ -118,8 +118,8 @@
         },
         "version": "1.0.0",
         "connector": "fortinet-fortiauthenticator",
-        "operation": "make_generic_request",
-        "operationTitle": "Make Generic Request",
+        "operation": "execute_an_api_request",
+        "operationTitle": "Execute an API Request",
         "pickFromTenant": false,
         "step_variables": []
       },
@@ -198,9 +198,9 @@
         },
         "version": "1.0.0",
         "connector": "fortinet-fortiauthenticator",
-        "operation": "make_generic_request",
+        "operation": "execute_an_api_request",
         "ignore_errors": true,
-        "operationTitle": "Make Generic Request",
+        "operationTitle": "Execute an API Request",
         "pickFromTenant": false,
         "step_variables": []
       },

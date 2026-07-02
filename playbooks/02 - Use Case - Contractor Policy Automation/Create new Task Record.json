@@ -26,12 +26,12 @@
                     "data": "{\n    \"u_email\": \"john.doe@example.com\",\n    \"u_phone\": \"555-1234\",\n    \"u_company\": \"Example Corp\",\n    \"u_device_mac\": \"AA:BB:CC:DD:EE:FF\",\n    \"u_access_zone\": \"employee\",\n    \"u_justification\": \"Need access for project work\",\n    \"u_site_location\": \"office-building-1\",\n    \"u_start_datetime\": \"2025-11-15 08:00:00\",\n    \"u_end_datetime\": \"2025-11-15 17:00:00\",\n    \"u_access_duration\": \"9\",\n    \"u_contractor_name\": \"John Doe\",\n    \"u_services_required\": \"HTTPS, SSH, RDP\",\n    \"short_description\": \"Network access request for project\",\n    \"description\": \"Requesting network access for project Alpha\",\n    \"priority\": \"3\",\n    \"urgency\": \"3\",\n    \"impact\": \"3\"\n  }",
                     "method": "POST",
                     "endpoint": "api\/now\/table\/x_955905_test_x_fortinet_network_access",
-                    "query_params": ""
+                    "params": ""
                 },
                 "version": "3.4.0",
                 "connector": "servicenow",
-                "operation": "generic_api_call",
-                "operationTitle": "Generic API Call",
+                "operation": "execute_an_api_request",
+                "operationTitle": "Execute an API Request",
                 "pickFromTenant": false,
                 "step_variables": []
             },

@@ -15,7 +15,7 @@
 
 ## Playbook Collection
 
-| 01 - Use Case - Contractor Policy Automation |
+| 02 - Use Case - Contractor Policy Automation |
 |:---------------------------------------------|
 
 | Playbook Name                              | Description                                                                                                                                                                   |
